@@ -640,6 +640,12 @@
   transform: rotate(-8deg);
 }
 
+/* Confirmación: sección más alta para dar aire al botón. */
+.section.rsvp {
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+
 /* ═══ Cierre ════════════════════════════════════════════════════════════════ */
 .closing {
   padding-top: 100px;
@@ -725,7 +731,7 @@
 /* Frase arriba del sobre, en caligráfica. */
 .env__title {
   position: absolute;
-  top: 9vh;
+  top: 17vh;
   left: 0;
   right: 0;
   padding: 0 var(--gutter);

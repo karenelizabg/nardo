@@ -14,7 +14,7 @@ export default function RSVP({ config, laceTop, laceBottom }) {
   const href = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(text)}` : rsvp.formUrl;
 
   return (
-    <Section id="confirmacion" tone="olive" laceTop={laceTop} laceBottom={laceBottom} labelledBy="rsvp-title">
+    <Section id="confirmacion" tone="olive" className="rsvp" laceTop={laceTop} laceBottom={laceBottom} labelledBy="rsvp-title">
       <SectionTitle id="rsvp-title" text={rsvp.title} />
       <p className="lead lead--light">
         {rsvp.message} {rsvp.deadlineLead}{' '}
