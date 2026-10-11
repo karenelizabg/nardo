@@ -1,0 +1,807 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Invitación · estilos de la columna y de cada sección
+   Orden: columna → base de sección → tipografía → botones → encaje →
+          portada → bienvenida/fecha → itinerario → ubicación → dress code →
+          confirmación → deseos → cierre → apertura → música
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Columna: ancho de celular, centrada, sobre fondo sólido ─────────────── */
+.invitation {
+  position: relative;
+  width: 100%;
+  max-width: var(--column-max);
+  min-height: 100svh;
+  margin: 0 auto;
+  overflow-x: clip;
+  background: var(--surface);
+}
+
+/* ── Base de sección ─────────────────────────────────────────────────────── */
+.section {
+  position: relative;
+  padding: var(--section-pad) var(--gutter);
+  text-align: center;
+}
+
+.section__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Textura de papel sobre los fondos planos (el verde usa su propio damasco). */
+.section--ivory::before,
+.section--mist::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--paper);
+  background-size: 520px 520px;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.section--olive {
+  /* Damasco verde (public/images/fondo.webp); --olive es el color de reserva. */
+  background: var(--olive) url('/images/fondo.webp') center / cover no-repeat;
+  color: var(--ivory);
+}
+
+.section--ivory {
+  background: var(--surface);
+  color: var(--ink);
+}
+.section--ivory::before {
+  opacity: 0.22;
+}
+
+.section--mist {
+  background: var(--mist);
+  color: var(--ink);
+}
+.section--mist::before {
+  opacity: 0.3;
+}
+
+.section--photo {
+  background: #12110c;
+  color: var(--ivory);
+}
+
+/* Dos secciones marfil seguidas se leen como un único bloque. */
+.section--ivory:has(+ .section--ivory) {
+  padding-bottom: 52px;
+}
+.section--ivory + .section--ivory {
+  padding-top: 0;
+}
+
+/* Entrada suave al hacer scroll (solo si hay JS y no hay movimiento reducido). */
+.js-reveal .section__inner {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.js-reveal .section__inner.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Tipografía ──────────────────────────────────────────────────────────── */
+.title {
+  font-weight: 500;
+  line-height: 1.22;
+  color: var(--olive-deep);
+  text-wrap: balance;
+}
+.section--olive .title,
+.section--photo .title {
+  color: var(--ivory);
+}
+
+.title__cap {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 78px;
+  line-height: 0;
+  margin-right: -3px;
+  vertical-align: -0.04em;
+}
+
+.title__rest {
+  font-size: 27px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 310px;
+  margin: 22px auto 0;
+  font-size: 19px;
+  line-height: 1.32;
+  text-wrap: balance;
+}
+
+.eyebrow,
+.month {
+  font-size: 22px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--olive-deep);
+}
+
+.fulldate {
+  margin-top: 8px;
+  font-size: 17px;
+  font-style: italic;
+  opacity: 0.85;
+}
+.fulldate::first-letter {
+  text-transform: uppercase;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.textlink {
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-underline-offset: 4px;
+  opacity: 0.8;
+}
+.textlink:hover {
+  opacity: 1;
+}
+
+/* ── Botones: rectángulos planos, sin radio ni sombra ────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 30px;
+  border: 1px solid transparent;
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.btn--light {
+  background: var(--surface);
+  color: var(--olive-deep);
+  border-color: var(--surface);
+}
+.btn--light:hover {
+  background: transparent;
+  color: var(--ivory);
+}
+.btn--olive {
+  background: var(--olive);
+  color: var(--ivory);
+  border-color: var(--olive);
+}
+.btn--olive:hover {
+  background: transparent;
+  color: var(--olive);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Encaje: imagen propia (public/images/encaje.webp), cubre el ancho ───── */
+.lace {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: var(--lace-h);
+  background: url('/images/encaje.webp') center bottom / cover no-repeat;
+  pointer-events: none;
+}
+.lace--top {
+  top: calc(var(--lace-h) * -1 + 2px);
+}
+.lace--bottom {
+  bottom: calc(var(--lace-h) * -1 + 2px);
+  transform: scaleY(-1);
+}
+
+/* ═══ Portada ═══════════════════════════════════════════════════════════════ */
+.hero {
+  padding: 0;
+  overflow: visible;
+}
+.hero .section__inner {
+  /* Alto de la pantalla de un celular (acotado en escritorio). El encaje de abajo
+     ocupa --lace-h, así que el marco se centra en el espacio restante. */
+  height: clamp(640px, 100svh, 932px);
+  padding: 28px 14px calc(var(--lace-h) + 8px);
+}
+.hero__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.frame__thick,
+.frame__thin {
+  fill: var(--ivory);
+  fill-opacity: 0.68;
+}
+
+.hero__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-names);
+  font-weight: 400;
+  font-size: 86px;
+  line-height: 1;
+  text-align: center;
+}
+.hero__name {
+  display: block;
+}
+.hero__name--amp {
+  /* El & es más grande que los nombres y se acerca a "Sarahi" con interlineado y margen negativos. */
+  font-size: 150px;
+  line-height: 0.5;
+  margin-top: -28px;
+  margin-bottom: 36px;
+}
+
+.hero__date,
+.hero__tagline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  font-variant-numeric: lining-nums;
+  color: var(--ivory);
+}
+.hero__date {
+  bottom: 23%;
+}
+.hero__tagline {
+  top: 25%;
+}
+/* Punto sólido fino entre día, mes y año. */
+.hero__date-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ═══ Bienvenida y fecha ════════════════════════════════════════════════════ */
+.daystrip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+.daystrip__day {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--mist);
+  color: var(--olive);
+  font-size: 19px;
+}
+.daystrip__day.is-event {
+  width: 66px;
+  height: 66px;
+  background: none;
+  color: var(--ivory);
+  font-size: 27px;
+}
+.daystrip__heart {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--olive);
+}
+.daystrip__day span {
+  position: relative;
+  line-height: 1;
+}
+.daystrip__day.is-event span {
+  margin-top: -2px;
+}
+
+.month {
+  margin-top: 16px;
+}
+
+/* ═══ Itinerario ════════════════════════════════════════════════════════════ */
+.timeline {
+  position: relative;
+  margin: 26px calc(var(--gutter) * -1) 0;
+}
+.timeline__curve {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--olive);
+  stroke-opacity: 0.55;
+  stroke-width: 1;
+}
+.timeline__item {
+  position: absolute;
+  width: 40%;
+  text-align: left;
+  transform: translate(-7px, -9px);
+}
+.timeline__heart {
+  width: 16px;
+  height: 15px;
+  color: var(--olive);
+}
+.timeline__time,
+.timeline__title,
+.timeline__desc {
+  padding-left: 26px;
+}
+.timeline__time {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-script);
+  font-size: 38px;
+  line-height: 1;
+  color: var(--olive);
+}
+.timeline__title {
+  margin-top: 6px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.timeline__desc {
+  margin-top: 2px;
+  font-size: 17px;
+  line-height: 1.2;
+  opacity: 0.85;
+}
+
+/* ═══ Ubicación ═════════════════════════════════════════════════════════════ */
+.section--photo {
+  padding-top: 78px;
+  padding-bottom: 74px;
+}
+.photo__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.photo__shade {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 9, 6, 0.38);
+}
+.section--photo .section__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lead--light {
+  color: var(--ivory);
+}
+
+.place {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.place__label {
+  margin-bottom: 4px;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.place__address {
+  display: flex;
+  flex-direction: column;
+  max-width: 280px;
+  font-size: 18px;
+  line-height: 1.3;
+}
+.place__name {
+  font-weight: 600;
+}
+.place__time {
+  margin-top: 6px;
+  font-style: italic;
+  opacity: 0.9;
+}
+.place__hint {
+  margin: 18px 0 16px;
+  font-size: 17px;
+  opacity: 0.9;
+}
+
+.photo__bow {
+  width: 92px;
+  height: auto;
+  margin-top: 42px;
+}
+.bow__loop {
+  fill: var(--surface);
+  stroke: var(--brown);
+  stroke-opacity: 0.45;
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+.bow__fold {
+  fill: none;
+  stroke: var(--brown);
+  stroke-opacity: 0.45;
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+/* ═══ Dress code ════════════════════════════════════════════════════════════ */
+.swatches {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+.swatch {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(55, 55, 45, 0.2);
+}
+
+/* ═══ Confirmación ══════════════════════════════════════════════════════════ */
+.section--olive .btn {
+  margin-top: 28px;
+}
+.devnote {
+  margin-top: 14px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+.devnote code {
+  font-size: 12px;
+}
+
+/* ═══ Deseos ════════════════════════════════════════════════════════════════ */
+.gifts__stage {
+  position: relative;
+  margin-top: 56px;
+}
+.gifts__envelope {
+  position: absolute;
+  left: -5%;
+  top: -34px;
+  width: 64%;
+  height: auto;
+  transform: rotate(-8deg);
+}
+.envelope__body {
+  fill: var(--sage);
+}
+.envelope__flap {
+  fill: var(--beige);
+  fill-opacity: 0.45;
+}
+.envelope__line {
+  fill: none;
+  stroke: var(--ivory);
+  stroke-opacity: 0.5;
+  stroke-width: 1;
+}
+
+.gifts__card {
+  position: relative;
+  margin: 0 8% 0 11%;
+  padding: 38px 26px 40px;
+  background: var(--olive) url('/images/fondo.webp') center / cover no-repeat;
+  color: var(--ivory);
+  font-size: 18px;
+  line-height: 1.32;
+  text-wrap: balance;
+}
+.gifts__card p + p {
+  margin-top: 1em;
+}
+.gifts__card .stack {
+  margin-top: 26px;
+}
+
+/* ═══ Cierre ════════════════════════════════════════════════════════════════ */
+.closing {
+  padding-top: 100px;
+  padding-bottom: 96px;
+}
+.countdown {
+  margin-top: 40px;
+}
+.countdown__label {
+  font-size: 16px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.countdown__list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+.countdown__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: rgba(250, 247, 238, 0.14);
+}
+.countdown__value {
+  font-size: 26px;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.countdown__name {
+  margin-top: 3px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.countdown__done {
+  margin-top: 40px;
+  font-size: 22px;
+  font-style: italic;
+}
+
+.closing__monogram {
+  margin-top: 54px;
+  font-family: var(--font-names);
+  font-size: 58px;
+  line-height: 1;
+}
+.closing__monogram span {
+  margin: 0 10px;
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-style: italic;
+  vertical-align: 0.25em;
+}
+.closing__names {
+  margin-top: 12px;
+  font-size: 16px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.closing__date {
+  margin-top: 8px;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+/* ═══ Apertura: sobre de pantalla completa ═════════════════════════════════ */
+.opening {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  perspective: 1400px;
+  /* Fondo del sobre: se aclara al abrir y desaparece al deslizar las piezas. */
+  background: var(--outer);
+  transition: opacity 0.5s var(--ease) 0.5s;
+}
+.opening.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+.envelope {
+  --env: #E9E2CF;
+  --env-shade: #DCD3BB;
+  --env-deep: #CFC5A9;
+  --slide: 1s var(--ease);
+  position: relative;
+  width: 100%;
+  max-width: var(--column-max);
+  height: 100%;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+.envelope__back,
+.envelope__piece,
+.envelope__flap {
+  position: absolute;
+  inset: 0;
+}
+.envelope__back {
+  z-index: 0;
+  background: var(--olive-deep);
+  transition: opacity 0.4s var(--ease);
+}
+.envelope__piece {
+  z-index: 1;
+}
+.envelope__piece--left {
+  background: var(--env-shade);
+  clip-path: polygon(0 0, 50% 52%, 0 100%);
+  transition: transform var(--slide);
+}
+.envelope__piece--right {
+  background: var(--env-shade);
+  clip-path: polygon(100% 0, 50% 52%, 100% 100%);
+  transition: transform var(--slide);
+}
+.envelope__piece--bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 14%;
+  background: var(--env);
+  clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+  transition: transform var(--slide);
+}
+.envelope__names {
+  font-family: var(--font-names);
+  font-size: 44px;
+  line-height: 1;
+  color: var(--olive-deep);
+}
+.envelope__flap {
+  bottom: auto;
+  height: 56%;
+  background: var(--env-deep);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform 1s var(--ease), z-index 0s linear 0.35s;
+  z-index: 3;
+}
+.envelope__seal {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  z-index: 4;
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #6d7150, var(--olive) 55%, var(--olive-deep));
+  box-shadow: 0 4px 10px rgb(0 0 0 / 0.28), inset 0 0 0 3px rgb(255 255 255 / 0.1);
+  color: var(--ivory);
+  font-family: var(--font-names);
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.envelope__seal:focus-visible {
+  outline: 2px solid var(--ivory);
+  outline-offset: 4px;
+}
+.envelope__hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(56% + 62px);
+  z-index: 4;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--olive-deep);
+  transition: opacity 0.35s var(--ease);
+}
+
+/* 1) La solapa se abre. */
+.opening.is-opening .envelope__flap,
+.opening.is-leaving .envelope__flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+.opening.is-opening .envelope__seal,
+.opening.is-leaving .envelope__seal {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+.opening.is-opening .envelope__hint,
+.opening.is-leaving .envelope__hint {
+  opacity: 0;
+}
+/* 2) Las piezas se deslizan fuera y queda la invitación. */
+.opening.is-leaving .envelope__back {
+  opacity: 0;
+}
+.opening.is-leaving .envelope__piece--left {
+  transform: translateX(-105%);
+}
+.opening.is-leaving .envelope__piece--right {
+  transform: translateX(105%);
+}
+.opening.is-leaving .envelope__piece--bottom {
+  transform: translateY(105%);
+}
+.opening.is-leaving .envelope__flap {
+  transform: rotateX(180deg) translateY(105%);
+}
+
+/* ═══ Música (opcional) ═════════════════════════════════════════════════════ */
+.music {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: flex-end;
+  height: 0;
+  padding-right: 12px;
+}
+.music__btn {
+  align-self: flex-start;
+  min-height: 40px;
+  margin-top: 12px;
+  padding: 0 14px;
+  border: 1px solid var(--olive);
+  background: var(--surface);
+  color: var(--olive);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
