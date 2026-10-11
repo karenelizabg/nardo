@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Section, SectionTitle } from './ui';
 
 /**
  * Galería: mosaico de dos columnas; al tocar una foto se abre en grande
- * (flechas, Esc y toque fuera para cerrar). Las fotos viven en `config.gallery.photos`.
+ * (flechas, Esc y toque fuera para cerrar). El visor va en el <body> para quedar por encima del encaje y de las demás secciones. Las fotos viven en `config.gallery.photos`.
  */
 export default function Gallery({ config, laceTop, laceBottom }) {
   const { title, photos } = config.gallery;
@@ -42,7 +43,7 @@ export default function Gallery({ config, laceTop, laceBottom }) {
         </ul>
       )}
 
-      {open !== null && (
+      {open !== null && createPortal(
         <div className="lightbox" role="dialog" aria-modal="true" aria-label={title} onClick={() => setOpen(null)}>
           <img className="lightbox__img" src={photos[open].src} alt={photos[open].alt || ''} onClick={(e) => e.stopPropagation()} />
           <button type="button" className="lightbox__close" onClick={() => setOpen(null)} aria-label="Cerrar">×</button>
@@ -52,7 +53,8 @@ export default function Gallery({ config, laceTop, laceBottom }) {
               <button type="button" className="lightbox__nav lightbox__nav--next" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Siguiente">›</button>
             </>
           )}
-        </div>
+        </div>,
+        document.body,
       )}
     </Section>
   );

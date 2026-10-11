@@ -31,13 +31,6 @@ export const formatLongDate = (event) =>
 export const formatShortDate = (event) =>
   format(event, { day: 'numeric', month: 'long', year: 'numeric' });
 
-/** ["25", "09", "27"]: día, mes y año (2 dígitos) en la zona horaria del lugar. */
-export const getNumericDateParts = (event) => {
-  const { year, month, day } = eventYMD(event);
-  const two = (n) => String(n).padStart(2, '0');
-  return [two(day), two(month), two(year % 100)];
-};
-
 export const formatMonth = (event) => format(event, { month: 'long' });
 
 export const formatTime = (event) =>

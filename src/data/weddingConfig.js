@@ -129,6 +129,19 @@ const weddingConfig = {
     ],
   },
 
+  /* ── Foto antes de las ubicaciones ──────────────────────────────────────── */
+  // Foto vertical a todo el ancho (siempre .webp en /public/images).
+  banner: {
+    src: `${import.meta.env.BASE_URL}images/foto-bn.webp`,
+    alt: 'Sarahi voltea sonriendo mientras camina de la mano de Manuel',
+  },
+
+  /* ── Foto al final de la invitación ─────────────────────────────────────── */
+  endPhoto: {
+    src: `${import.meta.env.BASE_URL}images/foto-bn-horizontal.webp`,
+    alt: 'Sarahi posa en un pasillo de columnas con Manuel al fondo',
+  },
+
   /* ── Galería ────────────────────────────────────────────────────────────── */
   // Cada foto: { src, alt }. Guárdalas en /public/images (siempre .webp) y usa la
   // base del sitio, p. ej. `${import.meta.env.BASE_URL}images/foto-1.webp`.
@@ -144,7 +157,7 @@ const weddingConfig = {
 
   /* ── Confirmación de asistencia ─────────────────────────────────────────── */
   rsvp: {
-    title: 'Confirma tu asistencia',
+    title: 'Confirma tu\nasistencia', // "\n" crea un salto de línea.
     message:
       'Queremos que este día sea inolvidable, por eso te pedimos confirmar tu presencia',
     // Se muestra como "…antes del {fecha}". Formato AAAA-MM-DD.
@@ -164,14 +177,22 @@ const weddingConfig = {
 
   /* ── Deseos / mesa de regalos ───────────────────────────────────────────── */
   gifts: {
-    title: 'Deseos',
-    message:
-      'Lo mejor para nosotros es tu presencia y tus buenas palabras.\n\nNo queremos abrumarte con un regalo, así que agradeceremos tu aporte al presupuesto de nuestra nueva familia.',
-    details: 'Si deseas obsequiarnos algo, estas son las opciones:',
-    // Enlaces externos (opcionales). Deja la lista vacía para ocultarlos.
-    links: [
-      { label: 'Mesa de regalos', url: 'https://example.com/mesa-de-regalos' }, // DEMO
-    ],
+    title: 'Mesa de regalos',
+    message: 'Nuestro mejor regalo es su presencia, si aún desea hacernos un obsequio adicional:',
+    // Mesa de regalos de una tienda (opcional: quita `store` para ocultarla).
+    store: {
+      name: 'Palacio de Hierro', // DEMO
+      eventLabel: 'No. de evento',
+      eventNumber: '000000', // DEMO
+      button: 'Click aquí',
+      url: 'https://example.com/mesa-de-regalos', // DEMO
+    },
+    // Datos bancarios para transferencia (opcional: quita `bank` para ocultarlos).
+    bank: {
+      name: 'BBVA', // DEMO
+      holder: 'Nombre del titular', // DEMO
+      account: '0000 0000 0000 0000', // DEMO
+    },
   },
 
   /* ── Música ─────────────────────────────────────────────────────────────── */
@@ -221,12 +242,14 @@ const weddingConfig = {
     welcome: true,
     date: true,
     itinerary: true,
+    banner: true,
     location: true,
-    dressCode: true,
+    dressCode: false,
     gallery: true,
     rsvp: true,
     gifts: true,
     closing: true,
+    endPhoto: true,
   },
 
   // Apertura (solo si `sections.opening` es true).

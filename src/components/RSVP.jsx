@@ -23,11 +23,6 @@ export default function RSVP({ config, laceTop, laceBottom }) {
       <Button variant="light" href={href || undefined} disabled={!href}>
         {rsvp.button}
       </Button>
-      {!href && import.meta.env.DEV && (
-        <p className="devnote">
-          Configura <code>rsvp.whatsapp</code> o <code>rsvp.formUrl</code> en weddingConfig.js.
-        </p>
-      )}
     </Section>
   );
 }

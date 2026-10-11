@@ -1,5 +1,5 @@
 import { Section } from './ui';
-import { formatLongDate, formatMonth, formatTime, getWeek } from '../utils/dates';
+import { formatLongDate, formatMonth, getWeek } from '../utils/dates';
 
 /* Óvalo trazado a mano alrededor del día de la boda. */
 function Scribble({ className = '' }) {
@@ -30,7 +30,7 @@ export default function DateSection({ config, laceTop, laceBottom }) {
 
       <div className="week" aria-hidden="true">
         {week.map(({ label, day, isEvent }, i) => (
-          <div key={i} className={isEvent ? 'week__col is-event' : 'week__col'} style={{ '--i': i }}>
+          <div key={i} className={isEvent ? 'week__col is-event' : 'week__col'}>
             <span className="week__label">{label}</span>
             <span className="week__day">
               {isEvent && <Scribble className="week__scribble" />}
@@ -42,7 +42,7 @@ export default function DateSection({ config, laceTop, laceBottom }) {
 
       <p className="fulldate">
         <time dateTime={event.dateTime}>
-          {formatLongDate(event)} · {formatTime(event)}
+          {formatLongDate(event)}
         </time>
       </p>
     </Section>
