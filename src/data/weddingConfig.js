@@ -195,6 +195,9 @@ const weddingConfig = {
     },
   },
 
+  /* ── Crédito (último renglón de la invitación) ──────────────────────────── */
+  credit: 'Hecho por AMORE',
+
   /* ── Música ─────────────────────────────────────────────────────────────── */
   // Nunca suena sola: inicia por un toque del invitado (botón o apertura).
   music: {
@@ -254,6 +257,7 @@ const weddingConfig = {
 
   // Apertura (solo si `sections.opening` es true).
   opening: {
+    title: 'Tienes una invitación especial',
     button: 'Toca para abrir',
   },
 };

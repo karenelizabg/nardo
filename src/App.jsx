@@ -81,6 +81,7 @@ export default function App({ config }) {
           const laceBottom = ivory && next && next.tone !== 'ivory' && !next.plainAfter?.includes(key);
           return <Component key={key} config={config} held={!revealed} laceTop={Boolean(laceTop)} laceBottom={Boolean(laceBottom)} />;
         })}
+        <footer className="credit">{config.credit}</footer>
       </main>
     </>
   );

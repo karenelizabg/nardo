@@ -39,12 +39,8 @@ export default function DateSection({ config, laceTop, laceBottom }) {
           </div>
         ))}
       </div>
-
-      <p className="fulldate">
-        <time dateTime={event.dateTime}>
-          {formatLongDate(event)}
-        </time>
-      </p>
+      {/* La fecha completa solo para lectores de pantalla: el calendario va oculto para ellos. */}
+      <time className="sr-only" dateTime={event.dateTime}>{formatLongDate(event)}</time>
     </Section>
   );
 }

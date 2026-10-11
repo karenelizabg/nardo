@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { coupleLabel } from '../utils/dates';
 
 /**
@@ -9,13 +9,11 @@ import { coupleLabel } from '../utils/dates';
  */
 export default function Opening({ config, onOpen, onReveal }) {
   const [phase, setPhase] = useState('closed');
-  const seal = useRef(null);
   const { couple, opening } = config;
 
   useEffect(() => {
     if (phase === 'gone') return undefined;
     document.body.style.overflow = 'hidden';
-    seal.current?.focus();
     return () => {
       document.body.style.overflow = '';
     };
@@ -36,23 +34,28 @@ export default function Opening({ config, onOpen, onReveal }) {
 
   return (
     <div className={`opening is-${phase}`} role="dialog" aria-modal="true" aria-label={coupleLabel(couple)}>
+      <p className="env__title">{opening.title}</p>
       <div className="env">
         <div className="env__part env__back" />
         <div className="env__letter">
-          <p className="env__letter-tag">{config.couple.tagline}</p>
+          <p className="env__letter-tag">{couple.tagline}</p>
           <p className="env__letter-names" aria-hidden="true">{couple.names.join(` ${couple.ampersand} `)}</p>
         </div>
         <div className="env__part env__pocket env__pocket--left" />
         <div className="env__part env__pocket env__pocket--right" />
         <div className="env__part env__pocket env__pocket--bottom" />
         <div className="env__flapwrap">
-          <div className="env__flap" />
+          {/* Solapa con la punta redondeada. */}
+          <svg className="env__flap" viewBox="0 0 1000 592" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M0 0H1000L544 540Q500 600 456 540Z" />
+          </svg>
           <div className="env__lace env__lace--left" />
           <div className="env__lace env__lace--right" />
         </div>
-        <button ref={seal} type="button" className="env__seal" onClick={open} aria-label={opening.button}>
-          <span aria-hidden="true">{couple.initials.join('')}</span>
-        </button>
+        <img className="env__seal" src={`${import.meta.env.BASE_URL}images/sello.webp`} alt="" decoding="async" />
+        <img className="env__flowers" src={`${import.meta.env.BASE_URL}images/flores.webp`} alt="" decoding="async" />
+        {/* Toda la superficie del sobre es el botón de abrir. */}
+        <button type="button" className="env__hit" onClick={open} aria-label={opening.button} />
         <p className="env__hint" aria-hidden="true">{opening.button}</p>
       </div>
     </div>

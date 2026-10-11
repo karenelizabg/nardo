@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Section, SectionTitle } from './ui';
-import { formatShortDate, getCountdown } from '../utils/dates';
+import { Section } from './ui';
+import { getCountdown } from '../utils/dates';
 
 function Countdown({ event, copy }) {
   const [time, setTime] = useState(() => getCountdown(event));
@@ -39,20 +39,12 @@ export default function Closing({ config, laceTop, laceBottom }) {
 
   return (
     <Section id="cierre" tone="olive" className="closing" laceTop={laceTop} laceBottom={laceBottom} labelledBy="closing-title">
-      <SectionTitle id="closing-title" text={copy.title} />
+      <h2 id="closing-title" className="sr-only">{copy.title}</h2>
       <p className="lead lead--light">{copy.text}</p>
 
       <Countdown event={event} copy={copy} />
 
-      <p className="closing__monogram" aria-hidden="true">
-        {couple.initials[0]}
-        <span>{couple.ampersand}</span>
-        {couple.initials[1]}
-      </p>
       <p className="closing__names">{couple.names.join(` ${couple.connector} `)}</p>
-      <p className="closing__date">
-        <time dateTime={event.dateTime}>{formatShortDate(event)}</time>
-      </p>
     </Section>
   );
 }
