@@ -388,6 +388,11 @@
 /* Sección verde con una cápsula clara (redondeada arriba y abajo): las actividades aparecen al hacer scroll. */
 .section.itinerary {
   padding: 52px 16px 56px;
+  /* Verde claro con relieve (public/images/fondo-claro.webp); --mist es el color de reserva. */
+  background: var(--mist) url('/images/fondo-claro.webp') center / cover no-repeat;
+}
+.section.itinerary::before {
+  display: none;
 }
 .arch {
   position: relative;
@@ -644,10 +649,10 @@
   margin-top: 40px;
 }
 .countdown__label {
-  font-size: 16px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  opacity: 0.85;
+  font-family: 'Great Vibes', var(--font-script);
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: 0.01em;
 }
 .countdown__list {
   display: flex;
@@ -679,15 +684,17 @@
 }
 .countdown__done {
   margin-top: 40px;
-  font-size: 22px;
-  font-style: italic;
+  font-family: 'Great Vibes', var(--font-script);
+  font-size: 34px;
 }
 
 .closing__names {
   margin-top: 44px;
-  font-size: 16px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: var(--font-names);
+  font-size: 46px;
+  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: 0;
 }
 /* Crédito al final de la invitación. */
 .credit {
