@@ -3,28 +3,33 @@ import { Lace } from './ornaments';
 
 /**
  * Contenedor de sección: fondo (`tone`), encaje opcional en sus bordes y
- * entrada suave al hacer scroll (desactivada con movimiento reducido).
+ * entrada escalonada al hacer scroll (desactivada con movimiento reducido).
  */
 export function Section({ id, tone, laceTop, laceBottom, labelledBy, backdrop, held = false, className = '', children }) {
   const inner = useRef(null);
 
+  // Cada hijo directo aparece al entrar en pantalla; los que entran juntos se escalonan.
   useEffect(() => {
     const el = inner.current;
-    if (held || !el || !document.documentElement.classList.contains('js-reveal')) return undefined;
-    if (!('IntersectionObserver' in window)) {
-      el.classList.add('is-visible');
+    if (held || !el) return undefined;
+    const kids = [...el.children];
+    if (!document.documentElement.classList.contains('js-reveal') || !('IntersectionObserver' in window)) {
+      kids.forEach((kid) => kid.classList.add('is-visible'));
       return undefined;
     }
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add('is-visible');
-          io.disconnect();
-        }
+      (entries) => {
+        entries
+          .filter((entry) => entry.isIntersecting)
+          .forEach((entry, k) => {
+            entry.target.style.setProperty('--reveal-delay', `${k * 0.14}s`);
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          });
       },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.05 },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
     );
-    io.observe(el);
+    kids.forEach((kid) => io.observe(kid));
     return () => io.disconnect();
   }, [held]);
 

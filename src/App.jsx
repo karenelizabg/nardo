@@ -7,6 +7,7 @@ import DateSection from './components/DateSection';
 import Itinerary from './components/Itinerary';
 import Location from './components/Location';
 import DressCode from './components/DressCode';
+import Gallery from './components/Gallery';
 import RSVP from './components/RSVP';
 import Gifts from './components/Gifts';
 import Closing from './components/Closing';
@@ -22,9 +23,10 @@ const SECTIONS = [
   { key: 'hero', tone: 'olive', always: true, Component: Hero },
   { key: 'welcome', tone: 'ivory', Component: Welcome },
   { key: 'date', tone: 'ivory', Component: DateSection },
-  { key: 'itinerary', tone: 'mist', Component: Itinerary },
   { key: 'location', tone: 'photo', Component: Location },
+  { key: 'itinerary', tone: 'mist', Component: Itinerary },
   { key: 'dressCode', tone: 'ivory', Component: DressCode },
+  { key: 'gallery', tone: 'ivory', Component: Gallery },
   { key: 'rsvp', tone: 'olive', Component: RSVP },
   { key: 'gifts', tone: 'ivory', plainAfter: ['rsvp'], Component: Gifts },
   { key: 'closing', tone: 'olive', Component: Closing },

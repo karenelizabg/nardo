@@ -1,58 +1,35 @@
-import { useState } from 'react';
-import { Section, SectionTitle, Button } from './ui';
-import { Bow } from './ornaments';
+import { Section, Button } from './ui';
+import { Cloud } from './ornaments';
 import { locationTime } from '../utils/dates';
 
+/**
+ * Un panel por lugar (ceremonia, celebración…): foto de fondo y una nube clara
+ * al centro con el texto. El título es solo para lectores de pantalla.
+ */
 export default function Location({ config, laceTop, laceBottom }) {
-  const { event, locations, gallery } = config;
+  const { event, locations } = config;
   const { location: copy } = config.content;
-  const photo = gallery.location;
-  const [photoFailed, setPhotoFailed] = useState(false);
 
   return (
-    <Section
-      id="ubicacion"
-      tone="photo"
-      laceTop={laceTop}
-      laceBottom={laceBottom}
-      labelledBy="location-title"
-      backdrop={
-        <>
-          {photo && !photoFailed && (
-            <img
-              className="photo__img"
-              src={photo.src}
-              alt={photo.alt}
-              loading="lazy"
-              decoding="async"
-              onError={() => setPhotoFailed(true)}
-            />
-          )}
-          <div className="photo__shade" aria-hidden="true" />
-        </>
-      }
-    >
-      <div className="photo__content">
-        <SectionTitle id="location-title" text={copy.title} />
-        <p className="lead lead--light">{copy.lead}</p>
-
-        {locations.map((place) => (
-          <div className="place" key={place.id}>
-            {locations.length > 1 && <p className="place__label">{place.label}</p>}
-            <address className="place__address">
-              <span className="place__name">{place.name}</span>
-              <span>{place.address}</span>
-            </address>
-            <p className="place__time">{locationTime(event, place)}</p>
-            <p className="place__hint">{copy.hint}</p>
-            <Button variant="light" href={place.mapsUrl} aria-label={`${copy.button}: ${place.name}`}>
-              {copy.button}
-            </Button>
+    <Section id="ubicacion" tone="photo" className="places" laceTop={laceTop} laceBottom={laceBottom} labelledBy="location-title">
+      <h2 id="location-title" className="sr-only">{copy.title}</h2>
+      {locations.map((place) => (
+        <div className="place" key={place.id}>
+          {place.photo && <img className="place__photo" src={place.photo} alt="" loading="lazy" decoding="async" />}
+          <div className="place__shade" aria-hidden="true" />
+          <div className="place__card">
+            <Cloud className="place__cloud" />
+            <div className="place__body">
+              <p className="place__label">{place.label}</p>
+              <p className="place__name">{place.name}</p>
+              <p className="place__time">{locationTime(event, place)}</p>
+              <Button variant="olive" href={place.mapsUrl} aria-label={`${copy.button}: ${place.name}`}>
+                {copy.button}
+              </Button>
+            </div>
           </div>
-        ))}
-      </div>
-
-      <Bow className="photo__bow" />
+        </div>
+      ))}
     </Section>
   );
 }

@@ -71,14 +71,17 @@ export const formatDeadline = (event, isoDay) => {
   }).format(new Date(Date.UTC(y, m - 1, d, 12)));
 };
 
-/** Días alrededor de la boda para el selector visual (±span). */
-export const getDayStrip = (event, span = 2) => {
+/** Semana (lunes a domingo) del evento: [{ label: "LU", day: 20, isEvent }]. */
+export const getWeek = (event) => {
   const { year, month, day } = eventYMD(event);
-  return Array.from({ length: span * 2 + 1 }, (_, i) => {
-    const offset = i - span;
+  const offsetToMonday = (new Date(Date.UTC(year, month - 1, day)).getUTCDay() + 6) % 7;
+  const weekday = new Intl.DateTimeFormat(event.locale, { timeZone: 'UTC', weekday: 'short' });
+  return Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(Date.UTC(year, month - 1, day - offsetToMonday + i));
     return {
-      day: new Date(Date.UTC(year, month - 1, day + offset)).getUTCDate(),
-      isEvent: offset === 0,
+      label: weekday.format(date).replace('.', '').slice(0, 2).toUpperCase(),
+      day: date.getUTCDate(),
+      isEvent: date.getUTCDate() === day && date.getUTCMonth() === month - 1,
     };
   });
 };

@@ -2,11 +2,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 // Fuentes empaquetadas (sin CDN). Si cambias `design.fonts`, importa aquí la nueva.
-import '@fontsource/cormorant-garamond/400.css';
-import '@fontsource/cormorant-garamond/500.css';
-import '@fontsource/cormorant-garamond/600.css';
-import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/forum/400.css';
 import '@fontsource/pinyon-script/400.css';
+import '@fontsource/great-vibes/400.css';
 
 import './styles/variables.css';
 import './styles/global.css';

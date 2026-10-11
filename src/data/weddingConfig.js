@@ -11,7 +11,7 @@
  *
  *  Para otra boda:
  *   1. Cambia los textos y datos de abajo.
- *   2. Reemplaza las imágenes de /public/images y apunta a ellas en `gallery`.
+ *   2. Reemplaza las imágenes de /public/images y apunta a ellas en `locations[].photo`.
  *   3. (Opcional) Ajusta `design.colors` y `design.fonts`.
  *   4. Activa o desactiva secciones en `sections`.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -54,17 +54,27 @@ const weddingConfig = {
   },
 
   /* ── Lugares ────────────────────────────────────────────────────────────── */
-  // La sección se muestra con uno o varios lugares. El primero usa la foto
-  // `gallery.location`. `time: 'event'` toma la hora de `event.dateTime`;
+  // Cada lugar es un panel con su foto (`photo`, siempre .webp en /public/images)
+  // y una nube con el texto. `time: 'event'` toma la hora de `event.dateTime`;
   // también acepta un texto "HH:mm" (24 h) para otro horario.
   locations: [
     {
       id: 'ceremonia',
-      label: 'Ceremonia y celebración',
-      name: 'Salón Jardín de Ejemplo', // DEMO
-      address: 'Calle de Ejemplo 123, Colonia Demo, Ciudad Demo', // DEMO
+      label: 'Ceremonia',
+      name: 'Parroquia de San Cristóbal',
+      address: 'Gómez Farías 4, Centro, 49500 Mazamitla, Jal.',
       time: 'event',
-      mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Salon+Jardin+de+Ejemplo', // DEMO
+      photo: `${import.meta.env.BASE_URL}images/iglesia.webp`,
+      mapsUrl: 'https://www.google.com/maps/place/Parroquia+de+San+Cristóbal,+Mazamitla/data=!4m2!3m1!1s0x842f08e910b60a59:0xe70f5c5f0c52aee4',
+    },
+    {
+      id: 'celebracion',
+      label: 'Celebración',
+      name: 'Hacienda La Bendita',
+      address: 'Camino al Montecito y Alcatraces s/n, La Cofradía, 49500 Mazamitla, Jal.',
+      time: '18:30', // DEMO
+      photo: `${import.meta.env.BASE_URL}images/hacienda.webp`,
+      mapsUrl: 'https://www.google.com/maps/place/Hacienda+la+Bendita+Eventos/@19.925462,-103.0424761,17z/data=!4m10!1m2!2m1!1shacienda+la+bendita+mazamitla!3m6!1s0x842f09a6f1310663:0xa281a77f540a3db2!8m2!3d19.9250588!4d-103.0391345',
     },
   ],
 
@@ -73,12 +83,10 @@ const weddingConfig = {
     welcome: {
       // "\n" crea un salto de línea. La primera letra se dibuja en caligráfica.
       title: 'Queridos familiares\ny amigos',
-      text: 'Los invitamos a compartir la alegría de un día muy especial para nosotros y a ser parte del inicio de nuestra historia en familia.',
-    },
+      text:'Con mucha ilusión, queremos compartir con ustedes el comienzo de una nueva etapa llena de amor y sueños por cumplir.',    },
     date: {
-      eyebrow: 'En este día',
-      calendarButton: 'Agregar al calendario',
-      googleCalendarLink: 'Abrir en Google Calendar',
+      eyebrow: 'Nuestra boda',
+
     },
     location: {
       title: 'Ubicación',
@@ -98,11 +106,12 @@ const weddingConfig = {
   /* ── Itinerario ─────────────────────────────────────────────────────────── */
   itinerary: {
     title: 'Itinerario',
+    suffix: 'HRS', // Se muestra después de la hora: "17:00 HRS".
     items: [
-      { time: '17:00', title: 'Ceremonia', description: 'Llegada y ceremonia' }, // DEMO
-      { time: '18:30', title: 'Cóctel', description: '' },
-      { time: '20:00', title: 'Banquete', description: 'Cena y brindis' },
-      { time: '22:00', title: 'Baile', description: '' },
+      { time: '17:00', title: 'Ceremonia' }, // DEMO
+      { time: '18:30', title: 'Cóctel' },
+      { time: '20:00', title: 'Banquete' },
+      { time: '22:00', title: 'Baile' },
     ],
   },
 
@@ -120,14 +129,17 @@ const weddingConfig = {
     ],
   },
 
-  /* ── Imágenes ───────────────────────────────────────────────────────────── */
-  // Rutas relativas a /public. Si una imagen no existe, la sección usa un fondo
-  // oscuro sólido y la página sigue funcionando.
+  /* ── Galería ────────────────────────────────────────────────────────────── */
+  // Cada foto: { src, alt }. Guárdalas en /public/images (siempre .webp) y usa la
+  // base del sitio, p. ej. `${import.meta.env.BASE_URL}images/foto-1.webp`.
   gallery: {
-    location: {
-      src: `${import.meta.env.BASE_URL}images/location-demo.webp`, // DEMO: reemplazar por una fotografía real del lugar (siempre en .webp).
-      alt: 'Interior del salón iluminado con luces cálidas',
-    },
+    title: 'Galería',
+    photos: [
+      { src: `${import.meta.env.BASE_URL}images/galeria-1.webp`, alt: 'Sarahi y Manuel abrazados frente a un muro de piedra' },
+      { src: `${import.meta.env.BASE_URL}images/galeria-2.webp`, alt: 'Manuel levanta a Sarahi entre columnas' },
+      { src: `${import.meta.env.BASE_URL}images/galeria-3.webp`, alt: 'Manuel carga a Sarahi frente a un templo de columnas' },
+      { src: `${import.meta.env.BASE_URL}images/galeria-4.webp`, alt: 'Sarahi y Manuel a punto de besarse' },
+    ],
   },
 
   /* ── Confirmación de asistencia ─────────────────────────────────────────── */
@@ -196,7 +208,7 @@ const weddingConfig = {
       names: 'Parfumerie Script',
       // Letras ornamentales de los títulos (paquete @fontsource importado en main.jsx).
       script: 'Pinyon Script',
-      serif: 'Cormorant Garamond',
+      serif: 'Forum',
     },
     // Ancho máximo de la columna (px). Equivale a un celular grande.
     columnMaxWidth: 430,
@@ -211,6 +223,7 @@ const weddingConfig = {
     itinerary: true,
     location: true,
     dressCode: true,
+    gallery: true,
     rsvp: true,
     gifts: true,
     closing: true,

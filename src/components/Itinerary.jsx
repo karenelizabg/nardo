@@ -1,55 +1,48 @@
-import { Section, SectionTitle } from './ui';
-import { Heart } from './ornaments';
+import { useEffect, useRef } from 'react';
+import { Section } from './ui';
 
-const SLOT = 190; // Alto vertical (px) que ocupa cada actividad.
-const PAD_TOP = 34;
-const X_LEFT = 14; // % del ancho donde se coloca el hito izquierdo.
-const X_RIGHT = 58; // % del ancho del hito derecho.
+/* Cada actividad aparece al llegar a la pantalla (si el movimiento no está reducido). */
+function Step({ item, suffix, index }) {
+  const ref = useRef(null);
 
-/* Curva que baja pegada al texto de cada hito y se abre hacia el siguiente por debajo. */
-const buildPath = (points, height) => {
-  const [first] = points;
-  let d = `M-4 ${first.y - SLOT * 0.62}C${first.x * 0.4} ${first.y - SLOT * 0.55} ${first.x} ${first.y - SLOT * 0.4} ${first.x} ${first.y}`;
-  for (let i = 1; i < points.length; i++) {
-    const a = points[i - 1];
-    const b = points[i];
-    d += `C${a.x} ${a.y + SLOT * 1.1} ${b.x} ${b.y - SLOT * 0.14} ${b.x} ${b.y}`;
-  }
-  const last = points[points.length - 1];
-  const edge = last.x < 50 ? 104 : -4;
-  d += `C${last.x} ${last.y + SLOT * 0.8} ${edge} ${last.y + SLOT * 0.5} ${edge} ${height}`;
-  return d;
-};
-
-export default function Itinerary({ config, laceTop, laceBottom }) {
-  const { title, items } = config.itinerary;
-  const height = PAD_TOP + items.length * SLOT + 30;
-  const points = items.map((_, i) => ({
-    x: i % 2 === 0 ? X_LEFT : X_RIGHT,
-    y: PAD_TOP + 24 + i * SLOT,
-  }));
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !document.documentElement.classList.contains('js-reveal') || !('IntersectionObserver' in window)) {
+      el?.classList.add('is-visible');
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('is-visible');
+          io.disconnect();
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <Section id="itinerario" tone="mist" laceTop={laceTop} laceBottom={laceBottom} labelledBy="itinerary-title">
-      <SectionTitle id="itinerary-title" text={title} />
+    <li ref={ref} className="step" style={{ '--reveal-delay': `${index * 0.22}s` }}>
+      <p className="step__title">{item.title}</p>
+      <time className="step__time">{item.time} {suffix}</time>
+    </li>
+  );
+}
 
-      <div className="timeline" style={{ height }}>
-        <svg className="timeline__curve" viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path d={buildPath(points, height)} vectorEffect="non-scaling-stroke" />
-        </svg>
+/* Sección verde con un arco claro arriba; las actividades van centradas, una bajo otra. */
+export default function Itinerary({ config, laceTop, laceBottom }) {
+  const { title, suffix, items } = config.itinerary;
 
-        <ol className="timeline__list">
+  return (
+    <Section id="itinerario" tone="mist" className="itinerary" laceTop={laceTop} laceBottom={laceBottom} labelledBy="itinerary-title">
+      <div className="arch">
+        <h2 id="itinerary-title" className="arch__title">{title}</h2>
+        <ol className="steps">
           {items.map((item, i) => (
-            <li
-              key={`${item.time}-${item.title}`}
-              className="timeline__item"
-              style={{ left: `${points[i].x}%`, top: points[i].y }}
-            >
-              <Heart className="timeline__heart" />
-              <time className="timeline__time">{item.time}</time>
-              <p className="timeline__title">{item.title}</p>
-              {item.description && <p className="timeline__desc">{item.description}</p>}
-            </li>
+            <Step key={`${item.time}-${item.title}`} item={item} suffix={suffix} index={i} />
           ))}
         </ol>
       </div>

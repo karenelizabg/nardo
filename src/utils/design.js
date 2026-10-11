@@ -11,7 +11,7 @@ export function applyDesign(config) {
   });
   root.style.setProperty('--font-script', `'${design.fonts.script}', 'Snell Roundhand', cursive`);
   root.style.setProperty('--font-names', `'${design.fonts.names}', '${design.fonts.script}', cursive`);
-  root.style.setProperty('--font-serif', `'${design.fonts.serif}', 'Cormorant', Georgia, serif`);
+  root.style.setProperty('--font-serif', `'${design.fonts.serif}', Georgia, serif`);
   root.style.setProperty('--column-max', `${design.columnMaxWidth}px`);
 
   root.lang = meta.lang;

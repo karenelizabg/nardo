@@ -27,6 +27,8 @@ body {
   font-size: 18px;
   line-height: 1.4;
   font-weight: 500;
+  /* Forum solo tiene peso normal y sin cursiva: evita negritas/cursivas falsas. */
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -79,4 +81,14 @@ button {
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* Solo para lectores de pantalla. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
