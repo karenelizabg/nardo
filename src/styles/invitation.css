@@ -387,7 +387,8 @@
 /* ═══ Itinerario ════════════════════════════════════════════════════════════ */
 /* Sección verde con una cápsula clara (redondeada arriba y abajo): las actividades aparecen al hacer scroll. */
 .section.itinerary {
-  padding: 32px 16px 36px;
+  /* Más verde arriba y abajo de la cápsula; abajo deja espacio al encaje de la sección siguiente. */
+  padding: 56px 16px 104px;
   /* Verde claro con relieve (public/images/fondo-claro.webp); --mist es el color de reserva. */
   background: var(--mist) url('/images/fondo-claro.webp') center / cover no-repeat;
 }
