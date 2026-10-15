@@ -18,7 +18,7 @@ import MusicToggle from './components/MusicToggle';
  * Orden de la invitación (el de la referencia) y tono de fondo de cada sección.
  * `key` coincide con `config.sections`. El encaje aparece solo donde una sección
  * marfil linda con otra de distinto tono; `plainAfter` evita el encaje cuando la
- * sección sigue a las indicadas (la referencia corta recto de Confirmación a Deseos).
+ * sección sigue a las indicadas.
  */
 const SECTIONS = [
   { key: 'hero', tone: 'olive', always: true, Component: Hero },
@@ -30,7 +30,7 @@ const SECTIONS = [
   { key: 'dressCode', tone: 'ivory', Component: DressCode },
   { key: 'gallery', tone: 'ivory', Component: Gallery },
   { key: 'rsvp', tone: 'olive', Component: RSVP },
-  { key: 'gifts', tone: 'ivory', plainAfter: ['rsvp'], Component: Gifts },
+  { key: 'gifts', tone: 'ivory', Component: Gifts },
   { key: 'closing', tone: 'olive', Component: Closing },
   { key: 'endPhoto', tone: 'photo', Component: EndPhoto },
 ];

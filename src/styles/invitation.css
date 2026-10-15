@@ -651,6 +651,12 @@
   padding-top: 100px;
   padding-bottom: 96px;
 }
+/* "Gracias por acompañarnos": más grande que el texto corrido de las demás secciones. */
+.closing .lead {
+  max-width: 350px;
+  font-size: 27px;
+  line-height: 1.28;
+}
 .countdown {
   margin-top: 40px;
 }
